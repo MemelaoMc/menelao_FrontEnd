@@ -5,6 +5,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+
+import INTERNAL_LINKS from "../../enums/InternalLinks";
 import CustomTable from '../../components/CustomTable';
 
 import { getAll } from '../../api/module/accounts';
@@ -44,11 +47,10 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
     margin: '3rem',
-    backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    height: 224,
+  },
+  btn: {
+    marginBottom: '1rem'
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -83,6 +85,9 @@ export default function Accounts() {
 
   return (
     <div className={classes.root}>
+      <Button href={INTERNAL_LINKS.ACCOUNTS_FORM} className={classes.btn} variant="contained" color="primary">
+        Agregar Nueva Cuenta
+      </Button>
       {dataSource &&
         <CustomTable dataSource={dataSource} />
       }

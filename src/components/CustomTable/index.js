@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -42,7 +43,7 @@ const CustomTable = ({ dataSource }) => {
               <TableCell align="right">{item.responsable}</TableCell>
               <TableCell align="right">{item.responsable_email}</TableCell>
               <TableCell align="right">{item.progress}</TableCell>
-              <TableCell align="right">{item.date}</TableCell>
+              <TableCell align="right">{moment(item.date).format('DD-MM-YYYY')}</TableCell>
             </TableRow>
           ))
           }

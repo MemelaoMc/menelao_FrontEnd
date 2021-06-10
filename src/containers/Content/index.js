@@ -19,7 +19,8 @@ import INTERNAL_LINKS from "../../enums/InternalLinks";
 
 // components
 import Accounts from '../../pages/Accounts';
-import Login from '../../pages/Login';
+import Home from '../../pages/Home';
+import AccountsForm from '../../containers/AccountsForm';
 
 import './style.css';
 
@@ -58,8 +59,14 @@ export default function Content() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path={INTERNAL_LINKS.ACCOUNTS}>
+          <Route exact path={INTERNAL_LINKS.HOME}>
+            <Home />
+          </Route>
+          <Route exact path={INTERNAL_LINKS.ACCOUNTS}>
             <Accounts />
+          </Route>
+          <Route exact path={INTERNAL_LINKS.ACCOUNTS_FORM}>
+            <AccountsForm />
           </Route>
         </Switch>
       </div>

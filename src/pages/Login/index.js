@@ -13,7 +13,10 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
+import { LinearProgress } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { FormHelperText } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 
 import { setUserSession } from '../../utils/auth';
 
@@ -43,17 +46,27 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     width: '23ch',
   },
+  progress: {
+    marginTop: '1rem',
+    width: 230,
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  }
 }));
 
 export default function Login() {
+  const { enqueueSnackbar } = useSnackbar();
   const [userName, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const classes = useStyles();
 
   const validateLogin = async (e) => {
     try {
+      setIsLoading(true);
       e.preventDefault();
       let data = {
         user_name: userName,
@@ -62,18 +75,16 @@ export default function Login() {
       const response = await login(data);
       console.log(response)
       if (response.status === 200) {
+        enqueueSnackbar('Se ha Iniciado sesion correctamente, Bienvenido!', { variant: 'success' });
+        setIsLoading(false);
         setUserSession(response.data.data);
       }
     }
     catch (err) {
       console.log(err);
+      enqueueSnackbar('No se ha podido Iniciar Sesión, Nombre y/o contraseña Invalidos!', { variant: 'error' });
+      setIsLoading(false);
     }
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(userName)
-    console.log(password)
   }
 
   const handleMouseDownPassword = (event) => {
@@ -95,6 +106,7 @@ export default function Login() {
             <Grid item>
               <TextField
                 id="input-with-icon-grid"
+                autoComplete="off"
                 onChange={(e) => setUsername(e.target.value)}
                 value={userName}
                 label="Nombre de usuario" />
@@ -111,6 +123,7 @@ export default function Login() {
                 <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                 <Input
                   id="standard-adornment-password"
+                  autoComplete="off"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -130,6 +143,12 @@ export default function Login() {
             </Grid>
           </Grid>
         </FormControl>
+        <div className={classes.progress}>
+          {isLoading ?
+            <LinearProgress />
+            : null
+          }
+        </div>
 
         <input className={classes.margin} type="submit" color="primary" value="Ingresar" />
       </form>
