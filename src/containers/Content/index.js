@@ -13,10 +13,13 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
+import { LogOut } from '../../utils/auth';
+
 import INTERNAL_LINKS from "../../enums/InternalLinks";
 
 // components
 import Accounts from '../../pages/Accounts';
+import Login from '../../pages/Login';
 
 import './style.css';
 
@@ -30,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  color: {
+    color: 'white !important'
+  }
 }));
 
 export default function Content() {
@@ -44,7 +50,7 @@ export default function Content() {
           <Typography variant="h6" className={classes.title}>
             <Link className="btn-link" to={INTERNAL_LINKS.ACCOUNTS}>Accounts</Link>
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button className={classes.color} onClick={() => LogOut()} className="btn-link" to={INTERNAL_LINKS.LOGIN}>Cerrar Session</Button>
         </Toolbar>
       </AppBar>
       <div>
@@ -52,12 +58,8 @@ export default function Content() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/about">
-          </Route>
           <Route path={INTERNAL_LINKS.ACCOUNTS}>
             <Accounts />
-          </Route>
-          <Route path={INTERNAL_LINKS.HOME}>
           </Route>
         </Switch>
       </div>

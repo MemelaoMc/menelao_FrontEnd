@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import CustomTable from '../../components/CustomTable';
 
-
+import { getAll } from '../../api/module/accounts';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,8 +59,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Accounts() {
+  const [dataSource, setDataSource] = useState(null);
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+
+  const getDataSource = async () => {
+    try {
+      const response = await getAll();
+      setDataSource(response.data);
+      console.log(response.data)
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    getDataSource();
+  }, [])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -68,7 +83,9 @@ export default function Accounts() {
 
   return (
     <div className={classes.root}>
-      <CustomTable />
+      {dataSource &&
+        <CustomTable dataSource={dataSource} />
+      }
     </div>
   )
 }

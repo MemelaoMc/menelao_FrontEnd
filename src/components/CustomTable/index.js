@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomTable = () => {
+const CustomTable = ({ dataSource }) => {
   const classes = useStyles();
 
   return (
@@ -25,24 +25,27 @@ const CustomTable = () => {
             <TableCell>Correo Electronico</TableCell>
             <TableCell align="right">Contraseña 1</TableCell>
             <TableCell align="right">Contraseña 2</TableCell>
-            <TableCell align="right">Responsable</TableCell>
+            <TableCell align="right">Persona responsable</TableCell>
             <TableCell align="right">Correo Responsable</TableCell>
             <TableCell align="right">Progreso</TableCell>
             <TableCell align="right">Fecha</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell component="th" scope="row">
-              angel@gmail.com
-            </TableCell>
-            <TableCell align="right">123434</TableCell>
-            <TableCell align="right">12323</TableCell>
-            <TableCell align="right">El</TableCell>
-            <TableCell align="right">Elmismo@gmail.com</TableCell>
-            <TableCell align="right">2 Dias</TableCell>
-            <TableCell align="right">2021-02-30</TableCell>
-          </TableRow>
+          {dataSource.map((item) => (
+            <TableRow key={item._id}>
+              <TableCell component="th" scope="row">
+                {item.email}
+              </TableCell>
+              <TableCell align="right">{item.password_1}</TableCell>
+              <TableCell align="right">{item.password_2}</TableCell>
+              <TableCell align="right">{item.responsable}</TableCell>
+              <TableCell align="right">{item.responsable_email}</TableCell>
+              <TableCell align="right">{item.progress}</TableCell>
+              <TableCell align="right">{item.date}</TableCell>
+            </TableRow>
+          ))
+          }
         </TableBody>
       </Table>
     </TableContainer>
