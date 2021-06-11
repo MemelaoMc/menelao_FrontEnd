@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
 import { LinearProgress } from '@material-ui/core';
 
 import CustomButton from '../../components/CustomButton';
+import CustomButtonLink from '../../components/CustomButtonLink';
 import INTERNAL_LINKS from '../../enums/InternalLinks';
 
 import { post } from '../../api/module/accounts';
@@ -147,9 +147,7 @@ export default function FormPropsTextFields() {
           </div>
         </form>
         <div className={classes.backBtn}>
-          <Button href={INTERNAL_LINKS.ACCOUNTS} variant="contained" color="secondary">
-            Volver
-        </Button>
+          <CustomButtonLink route={INTERNAL_LINKS.ACCOUNTS} text="Volver" danger={true} />
         </div>
       </div>
     </>

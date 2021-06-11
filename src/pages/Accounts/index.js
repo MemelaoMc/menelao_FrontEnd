@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 
 import INTERNAL_LINKS from "../../enums/InternalLinks";
 import CustomTable from '../../components/CustomTable';
+import CustomButtonLink from '../../components/CustomButtonLink';
 
 import { getAll } from '../../api/module/accounts';
 
@@ -72,9 +72,9 @@ export default function Accounts() {
 
   return (
     <div className={classes.root}>
-      <Button href={INTERNAL_LINKS.ACCOUNTS_FORM} className={classes.btn} variant="contained" color="primary">
-        Agregar Nueva Cuenta
-      </Button>
+      <div className={classes.btn}>
+        <CustomButtonLink route={INTERNAL_LINKS.ACCOUNTS_FORM} text="Agregar Nueva Cuenta" />
+      </div>
       {dataSource &&
         <CustomTable dataSource={dataSource} />
       }
