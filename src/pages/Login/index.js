@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -11,12 +11,11 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { AccountCircle, Lock } from '@material-ui/icons';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
 import { LinearProgress } from '@material-ui/core';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { FormHelperText } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
+
+import CustomButton from '../../components/CustomButton';
 
 import { setUserSession } from '../../utils/auth';
 
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginTop: theme.spacing(2),
     },
-  }
+  },
 }));
 
 export default function Login() {
@@ -61,19 +60,20 @@ export default function Login() {
   const [password, setPassword] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(false);
 
   const classes = useStyles();
 
   const validateLogin = async (e) => {
     try {
-      setIsLoading(true);
       e.preventDefault();
+      setIsLoading(true);
+
       let data = {
         user_name: userName,
         password: password
       }
       const response = await login(data);
-      console.log(response)
       if (response.status === 200) {
         enqueueSnackbar('Se ha Iniciado sesion correctamente, Bienvenido!', { variant: 'success' });
         setIsLoading(false);
@@ -83,6 +83,7 @@ export default function Login() {
     catch (err) {
       console.log(err);
       enqueueSnackbar('No se ha podido Iniciar Sesión, Nombre y/o contraseña Invalidos!', { variant: 'error' });
+      setError(true)
       setIsLoading(false);
     }
   }
@@ -99,7 +100,7 @@ export default function Login() {
 
       <form className={classes.root} onSubmit={validateLogin} autoComplete="off">
         <FormControl>
-          <Grid container spacing={1} alignItems="flex-end">
+          <Grid container spacing={1} alignItems="center">
             <Grid item>
               <AccountCircle />
             </Grid>
@@ -109,7 +110,10 @@ export default function Login() {
                 autoComplete="off"
                 onChange={(e) => setUsername(e.target.value)}
                 value={userName}
-                label="Nombre de usuario" />
+                label="Nombre de usuario"
+                error={error}
+                helperText={error ? 'Nombre de usuario incorrecto' : ' '}
+              />
             </Grid>
           </Grid>
         </FormControl>
@@ -127,6 +131,8 @@ export default function Login() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  error={error}
+                  helperText={error ? 'Contraseña incorrecta' : ' '}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -149,8 +155,9 @@ export default function Login() {
             : null
           }
         </div>
-
-        <input className={classes.margin} type="submit" color="primary" value="Ingresar" />
+        <div style={{ marginTop: '1rem' }}>
+          <CustomButton valueText="Ingresar" />
+        </div>
       </form>
     </>
   );

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -38,12 +36,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,13 +55,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Accounts() {
   const [dataSource, setDataSource] = useState(null);
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
 
   const getDataSource = async () => {
     try {
       const response = await getAll();
       setDataSource(response.data);
-      console.log(response.data)
     }
     catch (err) {
       console.log(err);
@@ -79,9 +69,6 @@ export default function Accounts() {
     getDataSource();
   }, [])
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <div className={classes.root}>

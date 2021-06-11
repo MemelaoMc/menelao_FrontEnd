@@ -11,7 +11,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 
 import { LogOut } from '../../utils/auth';
 
@@ -51,7 +50,7 @@ export default function Content() {
           <Typography variant="h6" className={classes.title}>
             <Link className="btn-link" to={INTERNAL_LINKS.ACCOUNTS}>Accounts</Link>
           </Typography>
-          <Button className={classes.color} onClick={() => LogOut()} className="btn-link" to={INTERNAL_LINKS.LOGIN}>Cerrar Session</Button>
+          <Button className={classes.color} onClick={() => LogOut()}>Cerrar Session</Button>
         </Toolbar>
       </AppBar>
       <div>

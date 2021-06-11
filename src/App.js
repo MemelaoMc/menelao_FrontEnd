@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 import Login from './pages/Login';
 import Content from './containers/Content';
 
@@ -15,7 +13,7 @@ function App() {
 
   return (
     <React.Fragment>
-      {IsLogged == true ?
+      {IsLogged === true ?
         <Content />
         :
         <Login />
